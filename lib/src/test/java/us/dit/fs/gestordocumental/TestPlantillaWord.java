@@ -50,6 +50,25 @@ class TestPlantillaWord {
 	        assertEquals(wordDocument.convertTextFileToString("parrafo.txt"), paragraphs.get(2).getText());
 	       
 	    }
+
+	@Test
+	public void whenCheckingSubtitleFontSize_thenCorrect() throws Exception {
+		Path msWordPath = Paths.get("Quijote.docx");
+		logger.info("path ", msWordPath);
+		XWPFDocument document = new XWPFDocument(Files.newInputStream(msWordPath));
+		List<XWPFParagraph> paragraphs = document.getParagraphs();
+
+		// Obtener el segundo párrafo, que es el subtítulo
+		XWPFParagraph subtitleParagraph = paragraphs.get(1);
+		List<XWPFRun> runs = subtitleParagraph.getRuns();
+
+		// Verificar que el tamaño de fuente sea 16
+		for (XWPFRun run : runs) {
+			assertEquals(16, run.getFontSize());
+		}
+
+		document.close();
+	}
 	}
 
 
